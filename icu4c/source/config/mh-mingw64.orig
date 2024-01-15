@@ -15,6 +15,11 @@ MINGW_MOVEDLLSTOBINDIR = YES
 # This file is similar to mh-mingw
 # Any changes made here may also need to be made in mh-mingw
 
+# We install sbin tools into the same bin directory because
+# pkgdata needs some of the tools in sbin, and we can't always depend on
+# icu-config working on Windows.
+sbindir=$(bindir)
+
 ## Commands to generate dependency files
 GEN_DEPS.c=	$(CC) -E -MM $(DEFS) $(CPPFLAGS)
 GEN_DEPS.cc=	$(CXX) -E -MM $(DEFS) $(CPPFLAGS)
