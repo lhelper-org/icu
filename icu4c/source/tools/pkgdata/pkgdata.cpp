@@ -1415,6 +1415,18 @@ static int32_t pkg_generateLibraryFile(const char *targetDir, const char mode, c
             freeCmd = true;
         }
 #if U_PLATFORM == U_PF_MINGW
+        fprintf(stderr, "genlib=%s targetdir=%s libfilenames=%s -o pkgdataflags=%s targetdir=%s libfilenames=%s objectfileandeverythingelse=%s %s%s %s %s",
+                pkgDataFlags[GENLIB],
+                targetDir,
+                libFileNames[LIB_FILE_MINGW],
+                pkgDataFlags[LDICUDTFLAGS],
+                targetDir,
+                libFileNames[LIB_FILE_VERSION_TMP],
+                objectFile,
+                pkgDataFlags[LD_SONAME],
+                pkgDataFlags[LD_SONAME][0] == 0 ? "" : libFileNames[LIB_FILE_VERSION_MAJOR],
+                pkgDataFlags[RPATH_FLAGS],
+                pkgDataFlags[BIR_FLAGS]);
         sprintf(cmd, "%s%s%s %s -o %s%s %s %s%s %s %s",
                 pkgDataFlags[GENLIB],
                 targetDir,
