@@ -76,6 +76,9 @@ else
 SO_TARGET_VERSION_SUFFIX = 
 endif
 
+STATIC_PREFIX_WHEN_USED = 
+STATIC_PREFIX = 
+
 # Static library prefix and file extension
 LIBSICU = $(LIBPREFIX)$(STATIC_PREFIX)$(ICUPREFIX)
 A = a

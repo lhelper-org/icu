@@ -55,8 +55,8 @@ LINK.c=       $(CXX) $(CXXFLAGS) $(LDFLAGS)
 LD_SOOPTIONS=
 
 ## Commands to make a shared library
-SHLIB.c=	$(CC) $(CFLAGS) $(LDFLAGS) -shared $(LD_SOOPTIONS) -Wl,--enable-auto-import -Wl,--out-implib=$(dir $@)lib$(notdir $(@:$(SO_TARGET_VERSION_MAJOR).$(SO)=))$(IMPORT_LIB_EXT)#M#
-SHLIB.cc=	$(CXX) $(CXXFLAGS) $(LDFLAGS) -shared $(LD_SOOPTIONS) -Wl,--enable-auto-import -Wl,--out-implib=$(dir $@)lib$(notdir $(@:$(SO_TARGET_VERSION_MAJOR).$(SO)=))$(IMPORT_LIB_EXT)#M#
+SHLIB.c=	$(CC) $(CFLAGS) $(LDFLAGS) -shared $(LD_SOOPTIONS) -Wl,--enable-auto-import -Wl,--out-implib=$(dir $@)$(notdir $(@:$(SO_TARGET_VERSION_MAJOR).$(SO)=))$(IMPORT_LIB_EXT)#M#
+SHLIB.cc=	$(CXX) $(CXXFLAGS) $(LDFLAGS) -shared $(LD_SOOPTIONS) -Wl,--enable-auto-import -Wl,--out-implib=$(dir $@)$(notdir $(@:$(SO_TARGET_VERSION_MAJOR).$(SO)=))$(IMPORT_LIB_EXT)#M#
 
 ## Compiler switch to embed a runtime search path
 LD_RPATH=	
@@ -89,7 +89,7 @@ LIBPREFIX=lib
 # This is also for backwards compatibility.
 DATA_STUBNAME = dt
 I18N_STUBNAME = in
-LIBICU = $(STATIC_PREFIX_WHEN_USED)$(ICUPREFIX)
+LIBICU = $(LIBPREFIX)$(STATIC_PREFIX_WHEN_USED)$(ICUPREFIX)
 
 #SH### copied from Makefile.inc
 #SH## for icu-config to test with
@@ -163,7 +163,7 @@ endif
 FINAL_SO_TARGET=$(basename $(SO_TARGET))$(SO_TARGET_VERSION_MAJOR).$(SO)
 MIDDLE_SO_TARGET=$(FINAL_SO_TARGET)
 
-FINAL_IMPORT_LIB = $(dir $(SO_TARGET))lib$(notdir $(basename $(SO_TARGET)))$(IMPORT_LIB_EXT)#M#
+FINAL_IMPORT_LIB = $(dir $(SO_TARGET))$(notdir $(basename $(SO_TARGET)))$(IMPORT_LIB_EXT)#M#
 IMPORT_LIB = $(FINAL_IMPORT_LIB)#M#
 MIDDLE_IMPORT_LIB = $(FINAL_IMPORT_LIB)#M#
 
