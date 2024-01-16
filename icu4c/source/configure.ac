@@ -537,40 +537,12 @@ AC_LANG_POP([C++])
 # Always build ICU with multi-threading support.
 OLD_LIBS=${LIBS}
 
-# For Compaq Tru64 (OSF1), we must look for pthread_attr_init
-# and must do this before searching for pthread_mutex_destroy, or
-# we will pick up libpthreads.so not libpthread.so
-# If this fails, then we must test for HPUX specials, before
-# moving on to a more generic test
+AX_PTHREAD()
 
-AC_CHECK_LIB(pthread, pthread_attr_init)
-if test $ac_cv_lib_pthread_pthread_attr_init = yes; then
-  :
-else
-  # Locate the right library for POSIX threads. We look for the
-  # symbols in the libraries first, because on Solaris libc provides
-  # pthread_create but libpthread has the real code :(
-  # AIX uses libpthreads instead of libpthread, and HP/UX uses libpthread
-  # FreeBSD users may need libpthread if they do not have libc_r.
+LIBS="$PTHREAD_LIBS $LIBS"
+CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
+CXXFLAGS="$CXXFLAGS $PTHREAD_CFLAGS"
 
-  AC_SEARCH_LIBS_FIRST(pthread_mutex_destroy, pthread pthreads c_r )
-
-  if test "$ac_cv_search_pthread_mutex_destroy" != no; then
-    :
-  else
-    # For HP 11
-    AC_CHECK_LIB(pthread, pthread_mutex_init)
-    if test $ac_cv_lib_pthread_pthread_mutex_init = yes; then
-      :
-    fi
-  fi
-
-  AC_CHECK_FUNC(pthread_mutex_lock)
-
-  if test $ac_cv_func_pthread_mutex_lock = yes; then
-    :
-  fi
-fi
 # Check to see if we are using CygWin with MSVC
 case "${host}" in
 *-pc-cygwin*|*-pc-mingw*)
